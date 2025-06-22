@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stefan Petersen - Resume</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tahoma:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tahoma', sans-serif;
+            font-size: 11px;
+            background: linear-gradient(45deg, #245edb 25%, #1941a5 25%, #1941a5 50%, #245edb 50%, #245edb 75%, #1941a5 75%);
+            background-size: 4px 4px;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .desktop {
+            width: 100%;
+            height: calc(100vh - 40px);
+            position: relative;
+        }
+        
+        .window {
+            position: absolute;
+            background: #ece9d8;
+            border: 2px outset #ece9d8;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .window-header {
+            background: linear-gradient(to bottom, #0054e3 0%, #0054e3 3%, #4e9eed 5%, #0054e3 100%);
+            color: white;
+            padding: 3px 5px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 24px;
+        }
+        
+        .window-title {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .window-icon {
+            width: 16px;
+            height: 16px;
+            background: #ffff00;
+            border: 1px solid #000;
+        }
+        
+        .window-controls {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .window-button {
+            width: 16px;
+            height: 14px;
+            background: #ece9d8;
+            border: 1px outset #ece9d8;
+            font-size: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+        }
+        
+        .window-button:hover {
+            background: #ddd;
+        }
+        
+        .window-content {
+            padding: 10px;
+            height: calc(100% - 24px);
+            overflow-y: auto;
+            background: white;
+            margin: 2px;
+        }
+        
+        .main-window {
+            width: 80%;
+            height: 70%;
+            top: 10%;
+            left: 10%;
+        }
+        
+        .about-window {
+            width: 300px;
+            height: 200px;
+            top: 20%;
+            right: 5%;
+            z-index: 10;
+        }
+        
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to bottom, #245edb 0%, #1941a5 100%);
+            border-top: 1px solid #4e9eed;
+            display: flex;
+            align-items: center;
+            padding: 0 5px;
+            z-index: 100;
+        }
+        
+        .start-button {
+            background: linear-gradient(to bottom, #3d8b3d 0%, #2d6e2d 100%);
+            border: 2px outset #3d8b3d;
+            color: white;
+            font-weight: bold;
+            padding: 2px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-right: 10px;
+        }
+        
+        .start-button:active,
+        .start-button.active {
+            border: 2px inset #3d8b3d;
+            background: linear-gradient(to bottom, #2d6e2d 0%, #3d8b3d 100%);
+        }
+        
+        .taskbar-button {
+            background: linear-gradient(to bottom, #4e97ed 0%, #1941a5 100%);
+            border: 1px outset #4e97ed;
+            color: white;
+            padding: 2px 10px;
+            margin-right: 5px;
+            cursor: pointer;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .taskbar-time {
+            margin-left: auto;
+            color: white;
+            font-size: 11px;
+            padding: 2px 8px;
+            background: rgba(0,0,0,0.2);
+            border: 1px inset #1941a5;
+        }
+        
+        h1 {
+            color: #0054e3;
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-align: center;
+            text-decoration: underline;
+        }
+        
+        h2 {
+            color: #0054e3;
+            font-size: 14px;
+            margin: 15px 0 8px 0;
+            background: #ddd;
+            padding: 3px;
+            border: 1px inset #ece9d8;
+        }
+        
+        h3 {
+            color: #000080;
+            font-size: 12px;
+            margin: 10px 0 5px 0;
+            font-weight: bold;
+        }
+        
+        .contact-info {
+            text-align: center;
+            background: #f0f0f0;
+            padding: 8px;
+            border: 2px inset #ece9d8;
+            margin-bottom: 15px;
+        }
+        
+        .job {
+            margin-bottom: 15px;
+            padding: 8px;
+            background: #f8f8f8;
+            border: 1px solid #ccc;
+        }
+        
+        .job-header {
+            font-weight: bold;
+            color: #000080;
+            margin-bottom: 5px;
+        }
+        
+        .job-date {
+            color: #666;
+            font-style: italic;
+            float: right;
+        }
+        
+        .job-description {
+            margin-top: 5px;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+        
+        li {
+            margin-bottom: 3px;
+        }
+        
+        .bio {
+            background: #ffffcc;
+            padding: 8px;
+            border: 2px inset #ece9d8;
+            margin-bottom: 15px;
+        }
+        
+        .education {
+            background: #e6f3ff;
+            padding: 8px;
+            border: 2px inset #ece9d8;
+        }
+        
+        .desktop-icon {
+            position: absolute;
+            width: 64px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .desktop-icon:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .desktop-icon-image {
+            width: 32px;
+            height: 32px;
+            background: #ffff00;
+            border: 2px outset #ffff00;
+            margin-bottom: 5px;
+        }
+        
+        .desktop-icon-text {
+            font-size: 10px;
+            text-align: center;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .start-menu {
+            position: fixed;
+            bottom: 40px;
+            left: 0;
+            width: 300px;
+            background: linear-gradient(to bottom, #245edb 0%, #1941a5 100%);
+            border: 2px outset #4e97ed;
+            box-shadow: 2px -2px 4px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+        
+        .start-menu-header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 20px 15px;
+            font-weight: bold;
+            font-size: 16px;
+            border-bottom: 1px solid #1941a5;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .start-menu-user-icon {
+            width: 48px;
+            height: 48px;
+            background: #fff;
+            border: 2px outset #fff;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .start-menu-items {
+            padding: 5px 0;
+        }
+        
+        .start-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            font-size: 11px;
+            gap: 10px;
+            transition: background-color 0.1s;
+        }
+        
+        .start-menu-item:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .start-menu-item-icon {
+            width: 24px;
+            height: 24px;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        
+        .start-menu-separator {
+            height: 1px;
+            background: #1941a5;
+            margin: 3px 10px;
+            border-top: 1px solid #4e97ed;
+        }
+        
+        .start-menu-footer {
+            padding: 8px 15px;
+            border-top: 1px solid #4e97ed;
+            background: rgba(0,0,0,0.1);
+        }
+        
+        .start-menu-footer-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            font-size: 11px;
+            padding: 4px 0;
+            cursor: pointer;
+        }
+        
+        .start-menu-footer-item:hover {
+            background: rgba(255,255,255,0.1);
+            padding: 4px 5px;
+            margin: 0 -5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop">
+        <!-- Desktop Icons -->
+        <div class="desktop-icon" style="top: 20px; left: 20px;" onclick="openWindow('main-window')">
+            <div class="desktop-icon-image"></div>
+            <div class="desktop-icon-text">My Resume</div>
+        </div>
+        
+        <div class="desktop-icon" style="top: 120px; left: 20px;" onclick="openWindow('about-window')">
+            <div class="desktop-icon-image" style="background: #ff6b6b;"></div>
+            <div class="desktop-icon-text">About Me</div>
+        </div>
+        
+        <!-- Main Resume Window -->
+        <div id="main-window" class="window main-window">
+            <div class="window-header">
+                <div class="window-title">
+                    <div class="window-icon"></div>
+                    <span>Stefan Petersen - Resume.doc</span>
+                </div>
+                <div class="window-controls">
+                    <div class="window-button">_</div>
+                    <div class="window-button">□</div>
+                    <div class="window-button" onclick="closeWindow('main-window')">×</div>
+                </div>
+            </div>
+            <div class="window-content">
+                <h1>STEFAN PETERSEN</h1>
+                
+                <div class="contact-info">
+                    Vancouver, BC • stefanpetersen1@gmail.com • 437-580-9422
+                </div>
+                
+                <div class="bio">
+                    <h2>📋 BIO</h2>
+                    Senior Business Analyst with 8 years of diverse experience including project
+                    management and software developer roles. Passionate about optimizing processes and
+                    distilling complex systems into clear documentation.
+                </div>
+                
+                <h2>💼 EXPERIENCE</h2>
+                
+                <div class="job">
+                    <div class="job-header">
+                        Senior Business Analyst, iPipeline
+                        <span class="job-date">Feb 2024 – Now</span>
+                    </div>
+                    <div class="job-description">
+                        Owned requirements definition and drove delivery of new products and features on
+                        client TD Bank's life insurance platform
+                        <ul>
+                            <li>Collaborated with external business stakeholders, internal developers, and QA to
+ship comprehensive platform improvements</li>
+                            <li>Spearheaded the implementation of a new technical support process, prioritizing new
+development work and communication with key client representatives</li>
+                            <li>Participated in system testing and documentation as part of a large-scale policy migration project</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="job">
+                    <div class="job-header">
+                        Project Manager/Business Analyst, Trupanion
+                        <span class="job-date">Jan 2022 – Jun 2023</span>
+                    </div>
+                    <div class="job-description">
+                        Revamped development processes and served as the business point of contact on a major team within one of North America's largest pet insurance companies
+                        <ul>
+                            <li>Overhauled story writing and Azure DevOps backlog management for a Microsoft Dynamics 365 CRM development team and significantly increased sprint release volume</li>
+                            <li>Served as interim Project Manager during a lengthy team transition and maintained development velocity</li>
+                            <li>Created, scheduled, and ran all Scrum ceremonies and improved team engagement with Agile principles</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="job">
+                    <div class="job-header">
+                        Technical Business Analyst, BIMM
+                        <span class="job-date">Oct 2020 – Jan 2022</span>
+                    </div>
+                    <div class="job-description">
+                        Delivered multiple large product launches as part of a digital agency for client Audi of North America
+                        <ul>
+                            <li>Led requirements gathering and documentation for ground-up redesigns of Audi's online marketplace, promotions hub, and vehicle comparison tool</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="job">
+                    <div class="job-header">
+                        Business Systems Analyst, TD Canada Trust
+                        <span class="job-date">Jul 2019 – Oct 2020</span>
+                    </div>
+                    <div class="job-description">
+                        Defined business and technology requirements for complex software infrastructure projects
+                        <ul>
+                            <li>Managed changing requirements and goals over the lifecycle of $1 million+ projects, including AML and PCI compliance upgrades</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="job">
+                    <div class="job-header">
+                        IT Solutions Associate, TD Canada Trust (Rotational)
+                        <span class="job-date">Jul 2017 – Jul 2019</span>
+                    </div>
+                    <div class="job-description">
+                        Worked across four roles, including software development, QA, and security analysis
+                    </div>
+                </div>
+                
+                <div class="education">
+                    <h2>🎓 EDUCATION</h2>
+                    <h3>Honours Bachelor of Computing, Software Design (2012 – 2017)</h3>
+                    Queen's University, Kingston
+                </div>
+            </div>
+        </div>
+        
+        <!-- About Window -->
+        <div id="about-window" class="window about-window hidden">
+            <div class="window-header">
+                <div class="window-title">
+                    <div class="window-icon" style="background: #ff6b6b;"></div>
+                    <span>About Stefan</span>
+                </div>
+                <div class="window-controls">
+                    <div class="window-button">_</div>
+                    <div class="window-button">□</div>
+                    <div class="window-button" onclick="closeWindow('about-window')">×</div>
+                </div>
+            </div>
+            <div class="window-content">
+                <h3 style="text-align: center; margin-bottom: 15px;">⚠️ Task Completed Successfully</h3>
+                <p style="margin-bottom: 10px;">I'm a Senior Business Analyst based in Vancouver with an interest in bridging the gap between business needs and technical solutions.</p>
+                <p>Feel free to browse through my experience and get in touch!</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Start Menu -->
+    <div id="start-menu" class="start-menu hidden">
+        <div class="start-menu-header">
+            <div class="start-menu-user-icon">👤</div>
+            <span>Stefan Petersen</span>
+        </div>
+        <div class="start-menu-items">
+            <div class="start-menu-item" onclick="openWindow('main-window'); closeStartMenu();">
+                <div class="start-menu-item-icon" style="background: #ffff00;">📄</div>
+                <span>My Resume</span>
+            </div>
+            <div class="start-menu-item" onclick="openWindow('about-window'); closeStartMenu();">
+                <div class="start-menu-item-icon" style="background: #ff6b6b;">ℹ️</div>
+                <span>About Me</span>
+            </div>
+            <div class="start-menu-separator"></div>
+            <div class="start-menu-item" onclick="showContactInfo(); closeStartMenu();">
+                <div class="start-menu-item-icon" style="background: #4CAF50;">📧</div>
+                <span>Contact Information</span>
+            </div>
+            <div class="start-menu-item" onclick="showSkills(); closeStartMenu();">
+                <div class="start-menu-item-icon" style="background: #2196F3;">🛠️</div>
+                <span>Skills & Tools</span>
+            </div>
+            <div class="start-menu-separator"></div>
+            <div class="start-menu-item" onclick="window.open('https://www.linkedin.com/in/stefan-petersen1', '_blank'); closeStartMenu();">
+                <div class="start-menu-item-icon" style="background: #0077B5;">🔗</div>
+                <span>LinkedIn Profile</span>
+            </div>
+        </div>
+        <div class="start-menu-footer">
+            <div class="start-menu-footer-item" onclick="refreshPage();">
+                <span>🔄 Refresh</span>
+            </div>
+            <div class="start-menu-footer-item" onclick="showHelp();">
+                <span>❓ Help</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="start-button" onclick="toggleStartMenu()" id="start-button">
+            🪟 Start
+        </div>
+        <div class="taskbar-button" onclick="openWindow('main-window')">My Resume</div>
+        <div class="taskbar-button" onclick="openWindow('about-window')">About Me</div>
+        <div class="taskbar-time" id="clock">12:34 PM</div>
+    </div>
+    
+    <script>
+        // Update clock
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            document.getElementById('clock').textContent = timeString;
+        }
+        
+        setInterval(updateClock, 1000);
+        updateClock();
+        
+        // Window management
+        function openWindow(windowId) {
+            const window = document.getElementById(windowId);
+            window.classList.remove('hidden');
+            bringToFront(window);
+        }
+        
+        function closeWindow(windowId) {
+            document.getElementById(windowId).classList.add('hidden');
+        }
+        
+        function bringToFront(element) {
+            const windows = document.querySelectorAll('.window');
+            windows.forEach(w => w.style.zIndex = '1');
+            element.style.zIndex = '10';
+        }
+        
+        // Make windows draggable
+        let isDragging = false;
+        let currentWindow = null;
+        let startX, startY, startLeft, startTop;
+        
+        document.querySelectorAll('.window-header').forEach(header => {
+            header.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                currentWindow = header.closest('.window');
+                bringToFront(currentWindow);
+                
+                const rect = currentWindow.getBoundingClientRect();
+                startX = e.clientX;
+                startY = e.clientY;
+                startLeft = rect.left;
+                startTop = rect.top;
+                
+                e.preventDefault();
+            });
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging || !currentWindow) return;
+            
+            const deltaX = e.clientX - startX;
+            const deltaY = e.clientY - startY;
+            
+            currentWindow.style.left = (startLeft + deltaX) + 'px';
+            currentWindow.style.top = (startTop + deltaY) + 'px';
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            currentWindow = null;
+        });
+        
+        // Start Menu functionality
+        let startMenuOpen = false;
+        
+        function toggleStartMenu() {
+            const startMenu = document.getElementById('start-menu');
+            const startButton = document.getElementById('start-button');
+            
+            if (startMenuOpen) {
+                closeStartMenu();
+            } else {
+                openStartMenu();
+            }
+        }
+        
+        function openStartMenu() {
+            const startMenu = document.getElementById('start-menu');
+            const startButton = document.getElementById('start-button');
+            
+            startMenu.classList.remove('hidden');
+            startButton.classList.add('active');
+            startMenuOpen = true;
+        }
+        
+        function closeStartMenu() {
+            const startMenu = document.getElementById('start-menu');
+            const startButton = document.getElementById('start-button');
+            
+            startMenu.classList.add('hidden');
+            startButton.classList.remove('active');
+            startMenuOpen = false;
+        }
+        
+        // Close start menu when clicking elsewhere
+        document.addEventListener('click', (e) => {
+            const startMenu = document.getElementById('start-menu');
+            const startButton = document.getElementById('start-button');
+            
+            if (startMenuOpen && 
+                !startMenu.contains(e.target) && 
+                !startButton.contains(e.target)) {
+                closeStartMenu();
+            }
+        });
+        
+        // Additional start menu functions
+        function showContactInfo() {
+            alert('📧 Contact Information:\n\nEmail: stefanpetersen1@gmail.com\nPhone: 437-580-9422\nLocation: Vancouver, BC');
+        }
+        
+        function showSkills() {
+            alert('🔊 Key Skills & Tools:\n\n' +
+                  '• Business Analysis & Requirements Gathering\n' +
+                  '• Project Management & Agile/Scrum\n' +
+                '• Jira & Confluence\n' +
+                  '• Process Optimization\n' +
+                  '• Stakeholder Management\n' +
+                  '• Technical Documentation\n' +
+                    '• Software Development Background\n');
+        }
+        
+        function refreshPage() {
+            location.reload();
+        }
+        
+        function showHelp() {
+            alert('❓ Help:\n\n• Click desktop icons to open windows\n• Use taskbar buttons to switch between windows\n• Drag windows by their title bars\n• Close windows with the × button\n• Have fun!');
+        }
+        
+        function showStartMenu() {
+            openStartMenu();
+        }
+        
+        // Open main window by default
+        window.addEventListener('load', () => {
+            openWindow('main-window');
+        });
+    </script>
+</body>
+</html>
